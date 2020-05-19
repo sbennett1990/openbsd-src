@@ -1261,7 +1261,7 @@ wsdisplay_internal_ioctl(struct wsdisplay_softc *sc, struct wsscreen *scr,
 
 	case WSDISPLAYIO_GETSCREENTYPE:
 #define d ((struct wsdisplay_screentype *)data)
-		if (d->idx >= sc->sc_scrdata->nscreens)
+		if (d->idx < 0 || d->idx >= sc->sc_scrdata->nscreens)
 			return(EINVAL);
 
 		d->nidx = sc->sc_scrdata->nscreens;

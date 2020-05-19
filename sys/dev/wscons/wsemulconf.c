@@ -78,7 +78,7 @@ wsemul_pick(const char *name)
 const char *
 wsemul_getname(int idx)
 {
-	if (idx >= nitems(wsemul_conf) - 1)
+	if (idx < 0 || idx >= nitems(wsemul_conf) - 1)
 		return (NULL);
 	return (wsemul_conf[idx]->name);
 }
