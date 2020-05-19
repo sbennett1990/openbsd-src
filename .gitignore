@@ -1,0 +1,5 @@
+# Ignore all CVS {sub,}directories
+CVS
+
+# Ignore obj build directories
+obj
