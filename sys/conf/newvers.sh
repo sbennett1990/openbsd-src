@@ -71,7 +71,7 @@ ost="OpenBSD"
 osr="6.7"
 
 cat >vers.c <<eof
-#define STATUS ""			/* release */
+#define STATUS "-stable"
 #if 0
 #define STATUS "-current"		/* just after a release */
 #define STATUS "-beta"			/* just before a release */
