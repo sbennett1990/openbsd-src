@@ -119,6 +119,9 @@ tls13_legacy_error(SSL *ssl)
 	case TLS13_ERR_NO_SHARED_CIPHER:
 		reason = SSL_R_NO_SHARED_CIPHER;
 		break;
+	case TLS13_ERR_NO_PEER_CERTIFICATE:
+		reason = SSL_R_PEER_DID_NOT_RETURN_A_CERTIFICATE;
+		break;
 	}
 
 	/* Something (probably libcrypto) already pushed an error on the stack. */

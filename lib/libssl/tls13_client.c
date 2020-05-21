@@ -587,6 +587,14 @@ tls13_server_certificate_recv(struct tls13_ctx *ctx, CBS *cbs)
 		cert = NULL;
 	}
 
+	/* A server must always provide a non-empty certificate list. */
+	if (sk_X509_num(certs) < 1) {
+		ctx->alert = SSL_AD_DECODE_ERROR;
+		tls13_set_errorx(ctx, TLS13_ERR_NO_PEER_CERTIFICATE, 0,
+		    "peer failed to provide a certificate", NULL);
+		goto err;
+	}
+
 	/*
 	 * At this stage we still have no proof of possession. As such, it would
 	 * be preferable to keep the chain and verify once we have successfully
