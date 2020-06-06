@@ -199,6 +199,9 @@ hid_get_item(struct hid_data *s, struct hid_item *h)
 	if (s == NULL)
 		return (0);
 
+	if (s->pushlevel >= MAXPUSH)
+		return (0);
+
 	c = &s->cur[s->pushlevel];
 
  top:
@@ -385,8 +388,8 @@ hid_get_item(struct hid_data *s, struct hid_item *h)
 				s->loc_count = dval & mask;
 				break;
 			case 10:	/* Push */
-				s->pushlevel ++;
-				if (s->pushlevel < MAXPUSH) {
+				if (s->pushlevel < MAXPUSH - 1) {
+					s->pushlevel++;
 					s->cur[s->pushlevel] = *c;
 					/* store size and count */
 					c->loc.size = s->loc_size;
@@ -399,8 +402,8 @@ hid_get_item(struct hid_data *s, struct hid_item *h)
 				}
 				break;
 			case 11:	/* Pop */
-				s->pushlevel --;
-				if (s->pushlevel < MAXPUSH) {
+				if (s->pushlevel > 0) {
+					s->pushlevel--;
 					/* preserve position */
 					oldpos = c->loc.pos;
 					c = &s->cur[s->pushlevel];
